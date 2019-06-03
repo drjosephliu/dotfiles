@@ -26,17 +26,14 @@ Plug 'rakr/vim-one'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-commentary'
 Plug 'ajh17/VimCompletesMe'
-" Plug 'sheerun/vim-polyglot'
+Plug 'vim-syntastic/syntastic'
+Plug 'mindriot101/vim-yapf'
 
 call plug#end()
 
 highlight ColorColumn ctermbg=gray
 set colorcolumn=81
 autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=80
-
-"if (has("termguicolors"))
-"  set termguicolors
-"endif
 
 set t_Co=256
 set term=xterm-256color
@@ -48,11 +45,6 @@ map <C-x> :NERDTreeToggle<CR>
 noremap <TAB> <C-W>w  
 
 " autoclose matching quotes, braces and parentheses
-" inoremap " ""<left>
-" inoremap ' ''<left>
-" inoremap ( ()<left>
-" inoremap [ []<left>
-" inoremap { {}<left>
 inoremap {<CR> {<CR>}<ESC>O
 inoremap {;<CR> {<CR>};<ESC>O
 inoremap jj  <Esc>
@@ -60,3 +52,4 @@ inoremap <Esc> <Nop>
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <C-y> <C-o>h
 inoremap <C-u> <C-o>l
+nnoremap <leader>f :call Yapf()<CR>
