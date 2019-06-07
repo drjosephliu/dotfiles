@@ -15,7 +15,8 @@ set cursorline
 set wildmenu
 set lazyredraw
 set showmatch
-
+set incsearch
+set hlsearch
 
 call plug#begin('~/.vim/plugged')
 
@@ -29,12 +30,18 @@ Plug 'ajh17/VimCompletesMe'
 Plug 'mindriot101/vim-yapf'
 Plug 'w0rp/ale'
 Plug 'alvan/vim-closetag'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
 highlight ColorColumn ctermbg=gray
 set colorcolumn=81
 autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=80
+autocmd BufRead, BufEnter, BufNewFile * IndentLinesReset
+let g:indentLine_enabled = 1
+let g:indentLine_char = '┊'
 
 let g:ale_linters = {
   \ 'python': ['flake8']
@@ -53,7 +60,8 @@ colorscheme gruvbox
 set background=dark
 
 map <C-x> :NERDTreeToggle<CR>
-noremap <TAB> <C-W>w  
+noremap <TAB> <C-W>w
+noremap <S-TAB> <C-W>h
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
@@ -71,4 +79,5 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <C-y> <C-o>h
 inoremap <C-u> <C-o>l
 nnoremap <leader>f :call Yapf()<CR>
-map <leader>p :set paste<CR>o<esc>"*]p:set nopaste<CR>
+map <leader>p :set paste<CR>i<esc>"*]p:set nopaste<CR>
+nnoremap <leader><space> :nohlsearch<CR>
