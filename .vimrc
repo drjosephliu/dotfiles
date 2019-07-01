@@ -33,18 +33,21 @@ Plug 'alvan/vim-closetag'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'Yggdroot/indentLine'
+Plug 'Vimjas/vim-python-pep8-indent'
 
 call plug#end()
 
 highlight ColorColumn ctermbg=gray
-set colorcolumn=81
-autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=80
+set colorcolumn=80
+autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=79 wrapmargin=79 linebreak
+" autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=0 wrapmargin=0 wrap linebreak
 autocmd BufRead, BufEnter, BufNewFile * IndentLinesReset
 let g:indentLine_enabled = 1
 let g:indentLine_char = '┊'
 
 let g:ale_linters = {
-  \ 'python': ['flake8']
+  \ 'python': ['flake8'],
+  \ 'javascript': ['prettier-eslint', 'eslint'],
   \ }
 let g:ale_fixers = {
   \ 'javascript': ['eslint']
