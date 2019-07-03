@@ -38,6 +38,7 @@ Plug 'Vimjas/vim-python-pep8-indent'
 
 call plug#end()
 
+" Set screen width and textwrap
 highlight ColorColumn ctermbg=gray
 set colorcolumn=121
 autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=120  wrapmargin=120 linebreak
@@ -69,9 +70,9 @@ set background=dark
 
 " NERDTree settings
 map <C-x> :NERDTreeToggle<CR>
-let g:NERDTreeChDirMode = 2
 noremap <TAB> <C-W>w
 noremap <S-TAB> <C-W>h
+autocmd BufEnter * lcd %:p:h
 
 " CtrlP settings
 let g:ctrlp_map = '<c-p>'
