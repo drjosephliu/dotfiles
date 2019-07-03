@@ -26,6 +26,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-commentary'
+Plug 'kien/ctrlp.vim'
 Plug 'ajh17/VimCompletesMe'
 Plug 'mindriot101/vim-yapf'
 Plug 'w0rp/ale'
@@ -38,13 +39,16 @@ Plug 'Vimjas/vim-python-pep8-indent'
 call plug#end()
 
 highlight ColorColumn ctermbg=gray
-set colorcolumn=80
-autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=79 wrapmargin=79 linebreak
+set colorcolumn=121
+autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=120  wrapmargin=120 linebreak
 " autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=0 wrapmargin=0 wrap linebreak
 autocmd BufRead, BufEnter, BufNewFile * IndentLinesReset
+
+" indent line ruler settings
 let g:indentLine_enabled = 1
 let g:indentLine_char = '┊'
 
+" linter settings
 let g:ale_linters = {
   \ 'python': ['flake8'],
   \ 'javascript': ['prettier-eslint', 'eslint'],
@@ -56,16 +60,35 @@ let g:ale_sign_error = '🚫'
 let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 1
 
+" theme and terminal colour scheme settings
 set t_Co=256
 set term=xterm-256color
 let g:gruvbox_contrast_dark='dark'
 colorscheme gruvbox
 set background=dark
 
+" NERDTree settings
 map <C-x> :NERDTreeToggle<CR>
+let g:NERDTreeChDirMode = 2
 noremap <TAB> <C-W>w
 noremap <S-TAB> <C-W>h
 
+" CtrlP settings
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_max_files = 0 
+let g:ctrlp_working_path_mode = 'rw'
+let g:ctrlp_match_window = 'min:4,max:30'
+let g:ctrlp_custom_ignore = {
+\ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|data\|log\|tmp$\|node_modules',
+\ 'file': '\.exe$\|\.so$\|\.dat$'
+\ }
+let g:ctrlp_prompt_mappings = {
+    \ 'PrtSelectMove("j")': ['<S-j>', '<Down>'],
+    \ 'PrtSelectMove("k")': ['<S-k>', '<Up>'],
+    \ }
+
+" closing tag settings
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 let g:closetag_filetypes = 'html,xhtml,phtml,jsx'
@@ -78,9 +101,17 @@ inoremap (<CR> (<CR>)<ESC>O
 inoremap (;<CR> (<CR>);<ESC>O
 inoremap jj  <Esc>
 inoremap <Esc> <Nop>
+
+" autocompletion popup window bindings
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <S-j> pumvisible() ? "\<C-n>" : "<S-j>"
+inoremap <expr> <S-k> pumvisible() ? "\<C-n>" : "<S-k>"
+
+" move cursor left/right in insert mode
 inoremap <C-y> <C-o>h
 inoremap <C-u> <C-o>l
+
+" miscellaneous bindings
 nnoremap <leader>f :call Yapf()<CR>
 map <leader>p :set paste<CR>i<esc>"*]p:set nopaste<CR>
 nnoremap <leader><space> :nohlsearch<CR>
