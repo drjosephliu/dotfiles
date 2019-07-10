@@ -26,7 +26,8 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'rakr/vim-one'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-commentary'
-Plug 'kien/ctrlp.vim'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'ajh17/VimCompletesMe'
 Plug 'mindriot101/vim-yapf'
 Plug 'w0rp/ale'
@@ -69,40 +70,38 @@ colorscheme gruvbox
 set background=dark
 
 " NERDTree settings
-map <C-x> :NERDTreeToggle<CR>
+function! NERDTreeToggleInCurDir()
+    " If NERDTree is open in the current buffer
+    if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+        exe ":NERDTreeClose"
+    else
+        if (expand("%:t") != '')
+            exe ":NERDTreeFind"
+        else
+            exe ":NERDTreeToggle"
+        endif
+    endif
+endfunction
+map <C-x> :call NERDTreeToggleInCurDir()<CR>
 noremap <TAB> <C-W>w
 noremap <S-TAB> <C-W>h
-autocmd BufEnter * lcd %:p:h
+" autocmd BufEnter * lcd %:p:h
+" let NERDTreeChDirMode = 2
 
-" CtrlP settings
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_max_files = 0 
-let g:ctrlp_working_path_mode = 'rw'
-let g:ctrlp_match_window = 'min:4,max:30'
-let g:ctrlp_custom_ignore = {
-\ 'dir':  '\.git$\|\.hg$\|\.svn$\|\.yardoc\|public\/images\|public\/system\|data\|log\|tmp$\|node_modules',
-\ 'file': '\.exe$\|\.so$\|\.dat$'
-\ }
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtSelectMove("j")': ['<S-j>', '<Down>'],
-    \ 'PrtSelectMove("k")': ['<S-k>', '<Up>'],
+" fzf and ripgrep settings
+set rtp+=/usr/local/opt/fzf
+let g:fzf_action = {
+    \ 'ctrl-t': 'tab split',
+    \ 'ctrl-i': 'split',
+    \ 'ctrl-s': 'vsplit'
     \ }
-
-" Silver searcher settings
-if executable('ag')
-    " Use ag over grep
-    set grepprg=ag\ --nogroup\ --nocolor
-
-    " Use ag in CtrlP for listing files. Ligthtning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag 5s -l --nocolor -g ""'
-
-    " ag is fast enough that Ctrl doesn't need to cache
-    let g:ctrlp_use_caching = 0
-endif
-" nnoremap K :grep! "\b<C-r><C-w>\b"<CR>:cw<CR>
-command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap <S-k> :Ag<Space>
+function! s:find_git_root()
+    return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+command! ProjectFiles execute 'Files' s:find_git_root()
+nnoremap <C-p> :ProjectFiles<CR>
+command! ProjectRg execute 'cd '.system('git rev-parse --show-toplevel') 'Rg'
+nnoremap <S-f> :ProjectRg<CR>
 
 " closing tag settings
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx'
