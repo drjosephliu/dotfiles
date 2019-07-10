@@ -12,6 +12,7 @@ set showtabline=4
 set number
 set showcmd
 set cursorline
+set laststatus=2
 set wildmenu
 set lazyredraw
 set showmatch
@@ -85,8 +86,7 @@ endfunction
 map <C-x> :call NERDTreeToggleInCurDir()<CR>
 noremap <TAB> <C-W>w
 noremap <S-TAB> <C-W>h
-" autocmd BufEnter * lcd %:p:h
-" let NERDTreeChDirMode = 2
+noremap gr gT
 
 " fzf and ripgrep settings
 set rtp+=/usr/local/opt/fzf
