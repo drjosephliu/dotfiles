@@ -37,13 +37,14 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'Yggdroot/indentLine'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'neovimhaskell/haskell-vim'
 
 call plug#end()
 
 " Set screen width and textwrap
 highlight ColorColumn ctermbg=gray
-set colorcolumn=121
-autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=120  wrapmargin=120 linebreak
+set colorcolumn=80
+autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=80  wrapmargin=80 linebreak
 " autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=0 wrapmargin=0 wrap linebreak
 autocmd BufRead, BufEnter, BufNewFile * IndentLinesReset
 
