@@ -46,6 +46,9 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'Yggdroot/indentLine'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'sainnhe/vim-color-forest-night'
+Plug 'sainnhe/gruvbox-material'
+Plug 'neovimhaskell/haskell-vim'
 
 call plug#end()
 
@@ -69,8 +72,9 @@ let g:ale_fix_on_save = 1
 set t_Co=256
 set term=xterm-256color
 let g:gruvbox_contrast_dark='dark'
-colorscheme gruvbox
+let g:gruvbox_material_background = 'soft'
 set background=dark
+colorscheme gruvbox-material
 
 " NERDTree settings
 function! NERDTreeToggleInCurDir()
@@ -142,3 +146,5 @@ vmap <Leader>P "+P
 " miscellaneous bindings
 nnoremap <leader>f :call Yapf()<CR>
 nnoremap <leader><leader> :nohlsearch<CR>
+nnoremap <S-j> <Nop>
+nnoremap <S-j> :<Up>
