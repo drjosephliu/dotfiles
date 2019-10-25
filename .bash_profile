@@ -1,68 +1,17 @@
-set -g default-terminal "xterm-256color"
-set-option -ga terminal-overrides ",xterm-256color:Tc"
+alias ll='ls -hartl'
+alias g='grep -i'
+alias get='curl -OL'
+alias tmux="TERM=screen-256color-bce tmux"
+source ~/.git-prompt.sh
+PS1='[\W$(__git_ps1 " (%s)")]\$ '
+export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
+export PATH="/usr/local/bin:$HOME/.pyenv/bin:$HOME/.ghcup/bin:$HOME/.cabal/bin:$HOME/.local/bin/:$PATH"
 
-set -g mouse on
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion || {
+    # if not found in /usr/local/etc, try the brew --prefix location
+    [ -f "$(brew --prefix)/etc/bash_completion.d/git-completion.bash" ] && \
+        . $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+}
 
-# change prefix to C-x
-unbind C-b
-set -g prefix C-x
-bind C-x send-prefix
-
-unbind C-d
-
-# vim-like pane resizing  
-bind -r Up resize-pane -U 1
-bind -r Down resize-pane -D 1
-bind -r Left resize-pane -L 1
-bind -r Right resize-pane -R 1
-
-# vim-like pane switching
-bind -n C-k select-pane -U 
-bind -n C-j select-pane -D 
-bind -n C-h select-pane -L 
-bind -n C-l select-pane -R 
-
-# and now unbind keys
-unbind k     
-unbind j  
-unbind h  
-unbind l  
-
-unbind C-Up   
-unbind C-Down 
-unbind C-Left 
-unbind C-Right
-
-# bind new pane
-bind \ split-window -h -c '#{pane_current_path}'  # Split panes horizontal
-bind - split-window -v -c '#{pane_current_path}'  # Split panes vertically
-
-set -g status-bg colour232
-set -g status-fg colour3
-
-# Copy-paste integration
-set-option -g default-command "reattach-to-user-namespace -l bash"
-
-# Use vim keybindings in copy mode
-setw -g mode-keys vi
-
-# Setup 'v' to begin selection as in Vim
-# bind-key -T vi-copy v begin-selection
-# bind-key -T vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
-bind-key -T copy-mode-vi 'v' send -X begin-selection
-bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
-
-# Update default binding of `Enter` to also use copy-pipe
-# unbind -T vi-copy Enter
-# bind-key -T vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
-unbind -T copy-mode-vi Enter
-bind-key -T copy-mode-vi Enter send -X copy-pipe-and-cancel "reattach-to-user-namespace pbcopy"
-
-# Bind ']' to use pbpaste
-bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
-
-# Switch panes while in copy mode
-bind-key -T copy-mode-vi C-h select-pane -L
-bind-key -T copy-mode-vi C-j select-pane -D
-bind-key -T copy-mode-vi C-k select-pane -U
-bind-key -T copy-mode-vi C-l select-pane -R
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
