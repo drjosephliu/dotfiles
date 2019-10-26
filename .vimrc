@@ -115,6 +115,9 @@ let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 let g:closetag_filetypes = 'html,xhtml,phtml,jsx'
 let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 
+" Haskell vim settings
+let g:haskell_indent_disable = 1
+
 " Map leader
 let mapleader = "\<Space>"
 
