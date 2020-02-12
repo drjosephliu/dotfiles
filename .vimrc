@@ -1,15 +1,14 @@
-" set expandtab
+set expandtab
 " set tabstop=4
 " set shiftwidth=4
-" set softtabstop=4
 
 syntax on          " Enable syntax highlighting 
 filetype indent on " Enable indenting for files
 set backspace=indent,eol,start " Allow backspacing over indentation
 set nocompatible   " Use VIM settings rather than Vi settings
-set softtabstop=4  " Indent by 2 spaces when hitting tab
-set shiftwidth=4   " Indent by 4 spaces when auto-indenting
-set tabstop=4      " Show existing tab with 4 spaces width
+set softtabstop=2  " Indent by 2 spaces when hitting tab
+set shiftwidth=2   " Indent by 4 spaces when auto-indenting
+set tabstop=2      " Show existing tab with 4 spaces width
 set autoindent     " Enable auto indenting
 set number         " Enable line numbers
 set nobackup       " Disable backup
@@ -29,6 +28,7 @@ set hlsearch      " Highlight searches
 highlight ColorColumn ctermbg=gray
 set colorcolumn=80
 autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=80  wrapmargin=80 linebreak
+autocmd FileType * set formatoptions=croqtn
 " autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=0 wrapmargin=0 wrap linebreak
 " autocmd BufRead, BufEnter, BufNewFile * IndentLinesReset
 
@@ -69,8 +69,6 @@ let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 1
 
 " theme and terminal colour scheme settings
-set t_Co=256
-set term=xterm-256color
 let g:gruvbox_contrast_dark='dark'
 let g:gruvbox_material_background = 'soft'
 set background=dark
@@ -89,6 +87,7 @@ function! NERDTreeToggleInCurDir()
         endif
     endif
 endfunction
+let NERDTreeQuitOnOpen=1
 map <C-x> :call NERDTreeToggleInCurDir()<CR>
 noremap <TAB> <C-W>w
 noremap <S-TAB> <C-W>h
@@ -115,7 +114,7 @@ let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 let g:closetag_filetypes = 'html,xhtml,phtml,jsx'
 let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 
-" Haskell vim settings
+" Haskell Vim settings
 let g:haskell_indent_disable = 1
 
 " Map leader

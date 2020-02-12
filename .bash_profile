@@ -2,6 +2,7 @@ alias ll='ls -hartl'
 alias g='grep -i'
 alias get='curl -OL'
 alias tmux="TERM=screen-256color-bce tmux"
+alias vim='nvim'
 source ~/.git-prompt.sh
 PS1='[\W$(__git_ps1 " (%s)")]\$ '
 export PROMPT_COMMAND='echo -ne "\033]0;${PWD/#$HOME/~}\007"'
@@ -15,3 +16,4 @@ export PATH="/usr/local/bin:$HOME/.pyenv/bin:$HOME/.ghcup/bin:$HOME/.cabal/bin:$
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+export GO111MODULE=off
