@@ -49,12 +49,17 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'sainnhe/vim-color-forest-night'
 Plug 'sainnhe/gruvbox-material'
 Plug 'neovimhaskell/haskell-vim'
+Plug 'lervag/vimtex'
+Plug 'SirVer/ultisnips'
 
 call plug#end()
+
 
 " indent line ruler settings
 let g:indentLine_enabled = 1
 let g:indentLine_char = '┊'
+let g:indentLine_concealcursor = ""
+let g:indentLine_fileTypeExclude = ['json', 'md', 'tex']
 
 " linter settings
 let g:ale_linters = {
@@ -117,8 +122,50 @@ let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 " Haskell Vim settings
 let g:haskell_indent_disable = 1
 
+" Python provider settings
+let g:python3_host_prog = "/Users/josephliu/.pyenv/versions/3.8.0/bin/python3"
+
+" Vimtex settings
+let g:tex_flavor='latex'
+let g:vimtex_view_method='skim'
+let g:vimtex_quickfix_mode=0
+
+" Live update to Skim
+let g:vimtex_view_general_viewer
+        \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+let g:vimtex_view_general_options = '-r @line @pdf @tex'
+
+" This adds a callback hook that updates Skim after compilation
+let g:vimtex_compiler_callback_hooks = ['UpdateSkim']
+
+function! UpdateSkim(status)
+    if !a:status | return | endif
+
+    let l:out = b:vimtex.out()
+    let l:tex = expand('%:p')
+    let l:cmd = [g:vimtex_view_general_viewer, '-r']
+
+    if !empty(system('pgrep Skim'))
+        call extend(l:cmd, ['-g'])
+    endif
+
+    if has('nvim')
+        call jobstart(l:cmd + [line('.'), l:out, l:tex])
+    elseif has('job')
+        call job_start(l:cmd + [line('.'), l:out, l:tex])
+    else
+        call system(join(l:cmd + [line('.'), shellescape(l:out), shellescape(l:tex)], ' '))
+    endif
+endfunction
+
+" " Ultisnips settings
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
 " Map leader
 let mapleader = "\<Space>"
+let maplocalleader = "\\"
 
 " autoclose matching quotes, braces and parentheses
 inoremap {<CR> {<CR>}<ESC>O
@@ -150,3 +197,4 @@ nnoremap <leader>f :call Yapf()<CR>
 nnoremap <leader><leader> :nohlsearch<CR>
 nnoremap <S-j> <Nop>
 nnoremap <S-j> :<Up>
+
