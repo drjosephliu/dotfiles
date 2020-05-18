@@ -17,7 +17,6 @@ set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)”
 set wildmenu       " Display command line's tab complete options as a menu
 set directory=$HOME/.vim/swp// " Store swp files in its own folder
 set undodir=$HOME/.vim/undodir " Store undo files in its own folder
-" set autochdir      " Change cwd everytime file is opened
 set showcmd        " Show cmd in bottom right screen
 set cursorline     " Highlight text of cursor
 set hlsearch       " Highlight searches
@@ -98,21 +97,6 @@ noremap <TAB> <C-W>w
 noremap <S-TAB> <C-W>h
 noremap gr gT
 
-" let g:netrw_banner = 0
-" let g:netrw_liststyle = 3
-" let g:netrw_browse_split = 4
-" let g:netrw_altv = 1
-" let g:netrw_winsize = 25
-" nnoremap <C-x> :Lex<CR>
-
-" augroup netrw_maps
-"   autocmd!
-"   autocmd filetype netrw call ApplyNetrwMaps()
-" augroup END
-
-" function ApplyNetrwMaps()
-"   nnoremap <buffer> p :call <SNR>73_NetrwSplit(5)<CR>
-" endfunction
 
 " fzf and ripgrep settings
 set rtp+=/usr/local/opt/fzf
