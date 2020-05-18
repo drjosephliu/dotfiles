@@ -17,12 +17,10 @@ set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)”
 set wildmenu       " Display command line's tab complete options as a menu
 set directory=$HOME/.vim/swp// " Store swp files in its own folder
 set undodir=$HOME/.vim/undodir " Store undo files in its own folder
-set showcmd       " Show cmd in bottom right screen
-set cursorline    " Highlight text of cursor
-" set lazyredraw
-" set showmatch
-set incsearch     " Find next search as you type
-set hlsearch      " Highlight searches
+" set autochdir      " Change cwd everytime file is opened
+set showcmd        " Show cmd in bottom right screen
+set cursorline     " Highlight text of cursor
+set hlsearch       " Highlight searches
 
 " Set screen width and textwrap
 highlight ColorColumn ctermbg=gray
@@ -50,7 +48,7 @@ Plug 'sainnhe/vim-color-forest-night'
 Plug 'sainnhe/gruvbox-material'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'lervag/vimtex'
-Plug 'SirVer/ultisnips'
+Plug 'sirver/ultisnips'
 
 call plug#end()
 
@@ -92,11 +90,29 @@ function! NERDTreeToggleInCurDir()
         endif
     endif
 endfunction
+let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
+" let NERDTreeChDirMode=3
 map <C-x> :call NERDTreeToggleInCurDir()<CR>
 noremap <TAB> <C-W>w
 noremap <S-TAB> <C-W>h
 noremap gr gT
+
+" let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_browse_split = 4
+" let g:netrw_altv = 1
+" let g:netrw_winsize = 25
+" nnoremap <C-x> :Lex<CR>
+
+" augroup netrw_maps
+"   autocmd!
+"   autocmd filetype netrw call ApplyNetrwMaps()
+" augroup END
+
+" function ApplyNetrwMaps()
+"   nnoremap <buffer> p :call <SNR>73_NetrwSplit(5)<CR>
+" endfunction
 
 " fzf and ripgrep settings
 set rtp+=/usr/local/opt/fzf
@@ -109,9 +125,9 @@ function! s:find_git_root()
     return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
 command! ProjectFiles execute 'Files' s:find_git_root()
-nnoremap <C-p> :ProjectFiles<CR>
 command! ProjectRg execute 'cd '.system('git rev-parse --show-toplevel') 'Rg'
-nnoremap <S-f> :ProjectRg<CR>
+nnoremap <C-p> :Files<CR>
+nnoremap <S-f> :Rg<CR>
 
 " closing tag settings
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx'
@@ -123,7 +139,7 @@ let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 let g:haskell_indent_disable = 1
 
 " Python provider settings
-let g:python3_host_prog = "/Users/josephliu/.pyenv/versions/3.8.0/bin/python3"
+let g:python3_host_prog = "/usr/local/bin/python3"
 
 " Vimtex settings
 let g:tex_flavor='latex'
@@ -159,9 +175,9 @@ function! UpdateSkim(status)
 endfunction
 
 " " Ultisnips settings
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsExpandTrigger = '<Tab>'
+let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
 " Map leader
 let mapleader = "\<Space>"
@@ -197,4 +213,3 @@ nnoremap <leader>f :call Yapf()<CR>
 nnoremap <leader><leader> :nohlsearch<CR>
 nnoremap <S-j> <Nop>
 nnoremap <S-j> :<Up>
-
