@@ -1,11 +1,8 @@
-set expandtab
-" set tabstop=4
-" set shiftwidth=4
-
 syntax on          " Enable syntax highlighting 
 filetype indent on " Enable indenting for files
 set backspace=indent,eol,start " Allow backspacing over indentation
 set nocompatible   " Use VIM settings rather than Vi settings
+set expandtab      " Use spaces instead of tab
 set softtabstop=2  " Indent by 2 spaces when hitting tab
 set shiftwidth=2   " Indent by 4 spaces when auto-indenting
 set tabstop=2      " Show existing tab with 4 spaces width
@@ -37,10 +34,12 @@ Plug 'tpope/vim-commentary'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'mindriot101/vim-yapf'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'alvan/vim-closetag'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'Yggdroot/indentLine'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'sainnhe/vim-color-forest-night'
@@ -50,7 +49,9 @@ Plug 'lervag/vimtex'
 Plug 'sirver/ultisnips'
 
 call plug#end()
-let g:fzf_preview_window = 'right:60%'
+
+nnoremap <localleader><localleader>i :PlugInstall<CR>
+nnoremap <localleader><localleader>c :PlugClean<CR>
 
 " indent line ruler settings
 let g:indentLine_enabled = 1
@@ -58,10 +59,10 @@ let g:indentLine_char = '┊'
 let g:indentLine_concealcursor = ""
 let g:indentLine_fileTypeExclude = ['json', 'md', 'tex']
 
-" linter settings
+" linter & fixer settings
 let g:ale_linters = {
   \ 'python': ['flake8'],
-  \ 'javascript': ['prettier-eslint', 'eslint'],
+  \ 'javascript': ['prettier', 'eslint'],
   \ }
 let g:ale_fixers = {
   \ 'javascript': ['eslint']
@@ -93,10 +94,6 @@ let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
 " let NERDTreeChDirMode=3
 map <C-x> :call NERDTreeToggleInCurDir()<CR>
-noremap <TAB> <C-W>w
-noremap <S-TAB> <C-W>h
-noremap gr gT
-
 
 " fzf and ripgrep settings
 set rtp+=/usr/local/opt/fzf
@@ -169,9 +166,14 @@ let g:UltiSnipsExpandTrigger = '<Tab>'
 let g:UltiSnipsJumpForwardTrigger = '<Tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
-" Map leader
+" map leader
 let mapleader = "\<Space>"
 let maplocalleader = "\\"
+
+" tab management 
+noremap <TAB> <C-W>w
+noremap <S-TAB> <C-W>h
+noremap gr gT
 
 " autoclose matching quotes, braces and parentheses
 inoremap {<CR> {<CR>}<ESC>O
