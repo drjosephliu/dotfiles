@@ -50,7 +50,7 @@ Plug 'lervag/vimtex'
 Plug 'sirver/ultisnips'
 
 call plug#end()
-
+let g:fzf_preview_window = 'right:60%'
 
 " indent line ruler settings
 let g:indentLine_enabled = 1
@@ -105,6 +105,12 @@ let g:fzf_action = {
     \ 'ctrl-i': 'split',
     \ 'ctrl-s': 'vsplit'
     \ }
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
 function! s:find_git_root()
     return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
