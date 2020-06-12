@@ -24,7 +24,6 @@ set colorcolumn=80
 autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=80  wrapmargin=80 linebreak
 autocmd FileType * set formatoptions=croqtn
 " autocmd BufNewFile,BufRead * setlocal formatoptions=croqtn textwidth=0 wrapmargin=0 wrap linebreak
-" autocmd BufRead, BufEnter, BufNewFile * IndentLinesReset
 
 call plug#begin('~/.vim/plugged')
 
@@ -46,12 +45,18 @@ Plug 'sainnhe/vim-color-forest-night'
 Plug 'sainnhe/gruvbox-material'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'lervag/vimtex'
-Plug 'sirver/ultisnips'
+Plug 'mbbill/undotree'
 
 call plug#end()
 
+" Vim-plug keybindings
 nnoremap <localleader><localleader>i :PlugInstall<CR>
 nnoremap <localleader><localleader>c :PlugClean<CR>
+
+" Undotree toggle keybinding
+nnoremap <C-m> :UndotreeToggle<CR>
+nnoremap <C-a> g-
+nnoremap <C-q> g+
 
 " indent line ruler settings
 let g:indentLine_enabled = 1
@@ -63,13 +68,21 @@ let g:indentLine_fileTypeExclude = ['json', 'md', 'tex']
 let g:ale_linters = {
   \ 'python': ['flake8'],
   \ 'javascript': ['prettier', 'eslint'],
+  \ 'javascript.jsx': ['prettier', 'eslint'],
+  \ 'typescript': ['prettier', 'eslint'],
+  \ 'typescript.tsx': ['prettier', 'eslint']
   \ }
 let g:ale_fixers = {
-  \ 'javascript': ['eslint']
+  \ 'javascript': ['eslint'],
+  \ 'javascript.jsx': ['eslint'],
+  \ 'typescript': ['eslint'],
+  \ 'typescript.tsx': ['eslint']
   \ }
 let g:ale_sign_error = '🚫'
 let g:ale_sign_warning = '⚠'
 let g:ale_fix_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_insert_leave = 0
 
 " theme and terminal colour scheme settings
 let g:gruvbox_contrast_dark='dark'
@@ -92,7 +105,6 @@ function! NERDTreeToggleInCurDir()
 endfunction
 let NERDTreeShowHidden=1
 let NERDTreeQuitOnOpen=1
-" let NERDTreeChDirMode=3
 map <C-x> :call NERDTreeToggleInCurDir()<CR>
 
 " fzf and ripgrep settings
@@ -103,7 +115,9 @@ let g:fzf_action = {
     \ 'ctrl-s': 'vsplit'
     \ }
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
+  \ call fzf#vim#files(
+  \   <q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, 
+  \   <bang>0)
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case -- '.shellescape(<q-args>), 1,
@@ -117,16 +131,17 @@ nnoremap <C-p> :Files<CR>
 nnoremap <S-f> :Rg<CR>
 
 " closing tag settings
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx'
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
-let g:closetag_filetypes = 'html,xhtml,phtml,jsx'
-let g:closetag_xhtml_filetypes = 'xhtml,jsx'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*tsx'
+let g:closetag_filetypes = 'html,xhtml,phtml,jsx.tsx'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx'
 
 " Haskell Vim settings
 let g:haskell_indent_disable = 1
 
 " Python provider settings
-let g:python3_host_prog = "/usr/local/bin/python3"
+let g:python_host_prog = "/usr/bin/python"
+let g:python3_hot_prog = "/usr/bin/python3"
 
 " Vimtex settings
 let g:tex_flavor='latex'
@@ -162,8 +177,8 @@ function! UpdateSkim(status)
 endfunction
 
 " " Ultisnips settings
-let g:UltiSnipsExpandTrigger = '<Tab>'
-let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+let g:UltiSnipsExpandTrigger = '<Ctrl>'
+let g:UltiSnipsJumpForwardTrigger = '<Ctrl>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 
 " map leader
@@ -205,3 +220,5 @@ nnoremap <leader>f :call Yapf()<CR>
 nnoremap <leader><leader> :nohlsearch<CR>
 nnoremap <S-j> <Nop>
 nnoremap <S-j> :<Up>
+
+" autocmd FileType typescript.tsx setlocal commentstring={/*\ %s\ */}
