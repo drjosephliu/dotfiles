@@ -208,6 +208,8 @@ inoremap <C-y> <C-o>h
 inoremap <C-u> <C-o>l
 
 " Visual bindings
+vmap <Space>y "+y
+vmap <Space>p "+p
 vmap <Leader>y "+y
 vmap <Leader>d "+d
 nmap <Leader>p "+p
