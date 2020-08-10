@@ -35,6 +35,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'mindriot101/vim-yapf'
 Plug 'dense-analysis/ale'
 Plug 'alvan/vim-closetag'
+Plug 'jiangmiao/auto-pairs'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'MaxMEllon/vim-jsx-pretty'
@@ -136,9 +137,9 @@ nnoremap <S-f> :Rg<CR>
 
 " closing tag settings
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx,*.js'
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*tsx,*.javascript'
+let g:closetag_xhtml_filenames = '*.xhtml'
 let g:closetag_filetypes = 'html,xhtml,phtml,jsx,tsx,javascript'
-let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx,javascript'
+let g:closetag_xhtml_filetypes = 'xhtml'
 
 " coc settings
 let g:coc_global_extensions = [
@@ -208,7 +209,19 @@ inoremap jj  <Esc>
 inoremap <Esc> <Nop>
 
 " autocompletion popup window bindings
-inoremap <expr> <Tab> pumvisible() ? "\<C-n><Space>" : "<Tab>"
+inoremap <silent><expr> <TAB>
+	  \ pumvisible() ? coc#_select_confirm() :
+	  \ coc#expandableOrJumpable() ?
+	  \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+	  \ <SID>check_back_space() ? "\<TAB>" :
+	  \ coc#refresh()
+
+	function! s:check_back_space() abort
+	  let col = col('.') - 1
+	  return !col || getline('.')[col - 1]  =~# '\s'
+	endfunction
+
+	let g:coc_snippet_next = '<tab>'
 
 " move cursor left/right in insert mode
 inoremap <C-y> <C-o>h
