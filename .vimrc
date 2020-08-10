@@ -40,6 +40,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'MaxMEllon/vim-jsx-pretty'
 " Plug 'mxw/vim-jsx'
 " Plug 'peitalin/vim-jsx-typescript'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'sainnhe/vim-color-forest-night'
@@ -138,6 +139,11 @@ let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx,*.js'
 let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*tsx,*.javascript'
 let g:closetag_filetypes = 'html,xhtml,phtml,jsx,tsx,javascript'
 let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx,javascript'
+
+" coc settings
+let g:coc_global_extensions = [
+  \ 'coc-tsserver'
+  \ ]
 
 " Haskell Vim settings
 let g:haskell_indent_disable = 1
