@@ -208,9 +208,7 @@ inoremap jj  <Esc>
 inoremap <Esc> <Nop>
 
 " autocompletion popup window bindings
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <S-j> pumvisible() ? "\<C-n>" : "<S-j>"
-inoremap <expr> <S-k> pumvisible() ? "\<C-n>" : "<S-k>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "<Tab>"
 
 " move cursor left/right in insert mode
 inoremap <C-y> <C-o>h
