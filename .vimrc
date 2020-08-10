@@ -134,10 +134,10 @@ nnoremap <C-p> :Files<CR>
 nnoremap <S-f> :Rg<CR>
 
 " closing tag settings
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx'
-let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*tsx'
-let g:closetag_filetypes = 'html,xhtml,phtml,jsx.tsx'
-let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.tsx,*.js'
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*tsx,*.javascript'
+let g:closetag_filetypes = 'html,xhtml,phtml,jsx,tsx,javascript'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx,tsx,javascript'
 
 " Haskell Vim settings
 let g:haskell_indent_disable = 1
