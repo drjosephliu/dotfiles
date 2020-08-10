@@ -45,6 +45,7 @@ Plug 'sainnhe/vim-color-forest-night'
 Plug 'sainnhe/gruvbox-material'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'lervag/vimtex'
+Plug 'sirver/ultisnips'
 Plug 'mbbill/undotree'
 
 call plug#end()
