@@ -15,7 +15,8 @@ set wildmenu       " Display command line's tab complete options as a menu
 set directory=$HOME/.vim/swp// " Store swp files in its own folder
 set undodir=$HOME/.vim/undodir " Store undo files in its own folder
 set showcmd        " Show cmd in bottom right screen
-set cursorline     " Highlight text of cursor
+set cursorline     " Highlight current line
+set cursorcolumn   " Highlight current column
 set hlsearch       " Highlight searches
 
 " Set screen width and textwrap
@@ -38,6 +39,7 @@ Plug 'alvan/vim-closetag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'MaxMEllon/vim-jsx-pretty'
 " Plug 'mxw/vim-jsx'
 " Plug 'peitalin/vim-jsx-typescript'
@@ -243,4 +245,3 @@ nnoremap <leader><leader> :nohlsearch<CR>
 nnoremap <S-j> <Nop>
 nnoremap <S-j> :<Up>
 
-" autocmd FileType typescript.tsx setlocal commentstring={/*\ %s\ */}
